@@ -1,0 +1,126 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Songti TC", "STSong", "SimSun", serif;
+  font-size: 15px;
+  line-height: 1.85;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.charter h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+.charter h1 + h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  color: #444;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.charter h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 2.2rem 0 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.charter h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 1.4rem 0 0.5rem;
+}
+
+.charter h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 1rem 0 0.4rem;
+  color: #333;
+}
+
+.charter p {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.charter ul,
+.charter ol {
+  margin: 0.4rem 0 0.75rem 1.6rem;
+}
+
+.charter li {
+  margin-bottom: 0.3rem;
+}
+
+.charter hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5rem 0;
+}
+
+.charter blockquote {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid #999;
+  color: #555;
+  background: #fafafa;
+  font-size: 0.92rem;
+}
+
+.charter table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.6rem 0 1rem;
+  font-size: 0.9rem;
+}
+
+.charter th,
+.charter td {
+  border: 1px solid #bbb;
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.charter th {
+  background: #f5f5f5;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.charter strong {
+  font-weight: 700;
+}
+
+.charter a {
+  color: #1a1a1a;
+}
+
+footer {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #999;
+  border-top: 1px solid #ddd;
+}
