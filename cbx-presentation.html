@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBX | 中商匯 — What is CBX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap');
+        
+        :root {
+            --navy: #0F172A;
+            --gold: #F59E0B;
+            --gold-light: #FCD34D;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+        
+        .navy-bg {
+            background-color: #0F172A;
+        }
+        
+        .gold {
+            color: #F59E0B;
+        }
+        
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        
+        .point-item {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .point-item:hover {
+            transform: translateX(8px);
+        }
+        
+        .professional-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                       box-shadow 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .professional-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .ppt-container {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+        
+        .slide-number {
+            font-feature-settings: "tnum";
+        }
+        
+        .accent-gold {
+            background: linear-gradient(90deg, #F59E0B, #FCD34D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .modern-shadow {
+            box-shadow: 0 10px 15px -3px rgb(15 23 42 / 0.1), 
+                       0 4px 6px -4px rgb(15 23 42 / 0.1);
+        }
+        
+        .nav-active {
+            background-color: #F59E0B;
+            color: #0F172A;
+            font-weight: 600;
+        }
+        
+        .resource-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background-color: #F1F5F9;
+            color: #0F172A;
+        }
+        
+        .presentation-nav {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .slide-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background-color: #64748B;
+            transition: all 0.2s ease;
+        }
+        
+        .slide-indicator.active {
+            width: 28px;
+            background-color: #F59E0B;
+        }
+        
+        .content-container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        
+        .prose-point {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 overflow-x-hidden">
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-screen-2xl mx-auto px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="flex items-center justify-center w-9 h-9 bg-amber-500 rounded-xl">
+                    <span class="text-slate-950 font-bold text-2xl tracking-tighter">C</span>
+                </div>
+                <div>
+                    <span class="font-semibold text-xl tracking-tight">CBX</span>
+                    <span class="text-slate-400 text-sm ml-1.5 font-light">中商匯</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-x-2 text-sm">
+                <div class="px-3 py-1.5 bg-slate-800 rounded-full text-xs font-medium flex items-center gap-x-2">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span class="text-slate-300">Hong Kong</span>
+                </div>
+                <button onclick="enterFullscreen()" 
+                        class="px-4 py-1.5 text-xs font-medium flex items-center gap-x-2 hover:bg-slate-800 transition-colors rounded-full border border-slate-700">
+                    <i class="fas fa-expand text-amber-400"></i>
+                    <span class="hidden md:inline">Full Screen</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Presentation Container -->
+    <div id="presentation" class="ppt-container pt-16">
+        
+        <!-- SLIDE 1: Title -->
+        <section id="slide-1" class="slide navy-bg flex items-center justify-center relative">
+            <div class="content-container px-8 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Logo mark -->
+                    <div class="flex justify-center mb-8">
+                        <div class="inline-flex items-center gap-x-4 px-6 py-3 bg-slate-900 border border-slate-700 rounded-2xl">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-500 rounded-2xl flex items-center justify-center shadow-inner">
+                                <span class="text-slate-950 font-black text-5xl tracking-[-3px]">C</span>
+                            </div>
+                            <div class="text-left">
+                                <div class="font-semibold text-4xl tracking-[-1.5px]">CBX</div>
+                                <div class="text-amber-400 text-sm font-medium tracking-[3px] -mt-0.5">CENTRAL BUSINESS EXCHANGE</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-7xl md:text-7xl font-bold tracking-tighter leading-none mb-4">
+                        中商匯
+                    </h1>
+                    <p class="text-4xl font-light text-slate-300 tracking-tight mb-10">Central Business Exchange</p>
+                    
+                    <div class="inline-flex items-center gap-x-3 bg-slate-900/70 border border-slate-700 px-8 py-4 rounded-2xl">
+                        <div class="text-2xl font-medium text-amber-400">合作無界</div>
+                        <div class="w-px h-6 bg-slate-700"></div>
+                        <div class="text-2xl font-light text-white">共創未來</div>
+                    </div>
+                    
+                    <div class="mt-12 text-xs tracking-[3px] text-slate-500 font-medium">COLLABORATE TO CREATE</div>
+                </div>
+            </div>
+            
+            <!-- Subtle poster reference -->
+            <div class="absolute bottom-8 right-8 opacity-60 text-[10px] font-mono">Inspired by official poster</div>
+        </section>
+        
+        <!-- SLIDE 2: What is CBX -->
+        <section id="slide-2" class="slide bg-white text-slate-900 flex items-center">
+            <div class="content-container px-8 md:px-12 py-16 w-full">
+                <div class="max-w-4xl mx-auto">
+                    <div class="uppercase tracking-[4px] text-xs font-semibold text-amber-600 mb-3">INTRODUCTION</div>
+                    <h2 class="section-header text-slate-900 mb-8">What is CBX?</h2>
+                    
+                    <div class="grid md:grid-cols-5 gap-8">
+                        <div class="md:col-span-3 space-y-6 prose-point">
+                            <div class="flex gap-4 point-item">
+                                <i class="fas fa-globe text-amber-500 mt-1.5 w-5"></i>
+                                <div>
+                                    <div class="font-semibold">高端商業資源對接平台</div>
+                                    <div class="text-slate-600 text-[15px]">A premium platform for strategic business resource matching and project co-creation</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4 point-item">
+                                <i class="fas fa-handshake text-amber-500 mt-1.5 w-5"></i>
+                                <div>
+                                    <div class="font-semibold">非傳統銷售網絡</div>
+                                    <div class="text-slate-600 text-[15px]">Not a simple referral or sales-driven network, but a deep collaboration ecosystem</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4 point-item">
+                                <i class="fas fa-building text-amber-500 mt-1.5 w-5"></i>
+                                <div>
+                                    <div class="font-semibold">香港註冊企業及專業人士</div>
+                                    <div class="text-slate-600 text-[15px]">Exclusive to Hong Kong registered businesses and licensed professionals</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="md:col-span-2 bg-slate-900 text-white p-8 rounded-3xl flex flex-col justify-center modern-shadow">
+                            <div class="text-xs tracking-widest text-amber-400 mb-3">CORE TAGLINE</div>
+                            <div class="text-4xl leading-none font-semibold tracking-tighter">Collaborate<br>to Create</div>
+                            <div class="mt-auto pt-6 text-sm text-slate-400">精準資源匹配 × 項目共創</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 3: Core Philosophy -->
+        <section id="slide-3" class="slide bg-slate-50 text-slate-900 flex items-center">
+            <div class="content-container px-8 md:px-12 py-16 w-full">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12">
+                        <div class="uppercase tracking-[3px] text-xs font-semibold text-amber-600 mb-2">OUR BELIEF</div>
+                        <h2 class="section-header">核心理念與宗旨</h2>
+                    </div>
+                    
+                    <div class="max-w-3xl mx-auto bg-white border border-slate-200 p-10 rounded-3xl modern-shadow">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="text-[17px] font-light text-slate-500 mb-1">商會宗旨</div>
+                            <div class="text-5xl font-semibold tracking-tighter leading-none mb-8">"合作無界，共創未來"</div>
+                            
+                            <div class="grid md:grid-cols-3 gap-6 w-full text-left text-sm">
+                                <div class="p-4 rounded-2xl bg-slate-50">
+                                    <div class="font-semibold text-amber-600 mb-1.5">精準匹配</div>
+                                    <div class="text-slate-600">Match resources with needs</div>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50">
+                                    <div class="font-semibold text-amber-600 mb-1.5">資源對接</div>
+                                    <div class="text-slate-600">Strategic resource docking</div>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50">
+                                    <div class="font-semibold text-amber-600 mb-1.5">項目共創</div>
+                                    <div class="text-slate-600">Joint project incubation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 4: Value Proposition -->
+        <section id="slide-4" class="slide navy-bg flex items-center">
+            <div class="content-container px-8 md:px-12 py-16 w-full">
+                <div class="max-w-4xl mx-auto">
+                    <div class="uppercase tracking-[4px] text-amber-400 text-xs font-semibold mb-3">VALUE PROPOSITION</div>
+                    <h2 class="section-header text-white mb-10">價值主張</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="bg-slate-800/60 border border-slate-700 p-8 rounded-3xl">
+                            <div class="font-semibold text-lg mb-4 flex items-center gap-x-3">
+                                <i class="fas fa-search text-amber-400"></i>
+                                <span>挖掘優勢資源</span>
+                            </div>
+                            <ul class="space-y-3 text-[15px] text-slate-300">
+                                <li class="flex items-start gap-x-3"><span class="text-amber-400 mt-1">•</span> 深入了解每位會員的獨特優勢</li>
+                                <li class="flex items-start gap-x-3"><span class="text-amber-400 mt-1">•</span> 精準識別發展需求與資源缺口</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-slate-800/60 border border-slate-700 p-8 rounded-3xl">
+                            <div class="font-semibold text-lg mb-4 flex items-center gap-x-3">
+                                <i class="fas fa-sync text-amber-400"></i>
+                                <span>精準匹配機制</span>
+                            </div>
+                            <ul class="space-y-3 text-[15px] text-slate-300">
+                                <li class="flex items-start gap-x-3"><span class="text-amber-400 mt-1">•</span> 助力現有業務升級轉型</li>
+                                <li class="flex items-start gap-x-3"><span class="text-amber-400 mt-1">•</span> 共同孵化全新商業項目</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 5: Resource Types -->
+        <section id="slide-5" class="slide bg-white text-slate-900 flex items-center">
+            <div class="content-container px-8 md:px-12 py-14 w-full">
+                <div class="max-w-5xl mx-auto">
+                    <div class="flex items-end justify-between mb-9">
+                        <div>
+                            <div class="uppercase tracking-[3px] text-xs font-semibold text-amber-600">RESOURCE ECOSYSTEM</div>
+                            <h2 class="section-header">商業資源類型</h2>
+                        </div>
+                        <div class="text-xs text-slate-500 hidden md:block">Resource Categories</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3.5">
+                        <!-- Resource cards -->
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl">
+                            <div class="resource-icon mb-4"><i class="fas fa-industry fa-lg"></i></div>
+                            <div class="font-semibold">實體與固定資產</div>
+                            <div class="text-xs text-slate-500 mt-2">地產、廠房、設備、倉儲、展示廳</div>
+                        </div>
+                        
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl">
+                            <div class="resource-icon mb-4"><i class="fas fa-globe fa-lg"></i></div>
+                            <div class="font-semibold">市場渠道與客戶</div>
+                            <div class="text-xs text-slate-500 mt-2">發行網絡、特許經營、高淨值客戶群</div>
+                        </div>
+                        
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl">
+                            <div class="resource-icon mb-4"><i class="fas fa-lightbulb fa-lg"></i></div>
+                            <div class="font-semibold">技術、研發與IP</div>
+                            <div class="text-xs text-slate-500 mt-2">專利、品牌、軟件系統、獨家代理權</div>
+                        </div>
+                        
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl">
+                            <div class="resource-icon mb-4"><i class="fas fa-truck fa-lg"></i></div>
+                            <div class="font-semibold">專業能力與供應鏈</div>
+                            <div class="text-xs text-slate-500 mt-2">原物料網絡、跨境合規、專業團隊</div>
+                        </div>
+                        
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl">
+                            <div class="resource-icon mb-4"><i class="fas fa-hand-holding-usd fa-lg"></i></div>
+                            <div class="font-semibold">資本與機構資源</div>
+                            <div class="text-xs text-slate-500 mt-2">VC / PE / 家族辦公室、政府基金</div>
+                        </div>
+                        
+                        <div class="professional-card border border-slate-200 p-5 rounded-3xl bg-amber-50 border-amber-200">
+                            <div class="font-semibold text-amber-700">商業共創模式</div>
+                            <div class="text-xs text-amber-600 mt-1.5">股權合作、合資 JV、收益分成、戰略聯盟</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 6: Co-Creation & Referral -->
+        <section id="slide-6" class="slide bg-slate-50 flex items-center">
+            <div class="content-container px-8 md:px-12 py-16 w-full">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <div class="text-amber-600 tracking-widest text-xs font-semibold">PRACTICES</div>
+                        <h2 class="section-header">運作機制</h2>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <div class="professional-card bg-white border border-slate-200 px-8 py-7 rounded-3xl flex gap-x-8 items-start">
+                            <div class="w-8 h-8 rounded-full bg-amber-100 flex-shrink-0 flex items-center justify-center">
+                                <i class="fas fa-sync text-amber-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-xl">商業共創模式</div>
+                                <div class="text-slate-600 mt-1 text-[15px]">股權合作、合資（JV）、收益分成（Revenue Sharing）或戰略聯盟，補足資源短板</div>
+                            </div>
+                        </div>
+                        
+                        <div class="professional-card bg-white border border-slate-200 px-8 py-7 rounded-3xl flex gap-x-8 items-start">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center">
+                                <i class="fas fa-handshake text-emerald-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-xl">引薦佣金慣例</div>
+                                <div class="text-slate-600 mt-1 text-[15px]">成功促成實質合作時，受益方可自願給予引薦方合理回報，鼓勵資源分享</div>
+                                <div class="inline-block mt-3 px-3 py-px text-xs bg-emerald-50 text-emerald-600 rounded">完全自主決定 • 非強制</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 7: Membership -->
+        <section id="slide-7" class="slide navy-bg flex items-center">
+            <div class="content-container px-8 md:px-12 py-14 w-full">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-9">
+                        <div class="tracking-[3px] text-xs text-amber-400 font-medium">MEMBERSHIP</div>
+                        <h2 class="section-header text-white">會員類別</h2>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <!-- Company -->
+                        <div class="professional-card bg-white text-slate-900 p-7 rounded-3xl flex flex-col">
+                            <div>
+                                <div class="text-xs font-bold tracking-widest text-amber-600">TYPE A</div>
+                                <div class="font-bold text-2xl mt-1">企業會員</div>
+                                <div class="text-xs text-slate-500">Company Membership</div>
+                            </div>
+                            <div class="flex-1 mt-6 text-sm space-y-2 text-slate-600">
+                                <div>• 香港註冊企業法人</div>
+                                <div>• 具備實體運營或供應鏈</div>
+                                <div>• 股東或董事代表</div>
+                                <div>• 每企業僅限一席</div>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-5 pt-4 border-t">需提交商業登記證及周年申報表</div>
+                        </div>
+                        
+                        <!-- Professional -->
+                        <div class="professional-card bg-white text-slate-900 p-7 rounded-3xl flex flex-col">
+                            <div>
+                                <div class="text-xs font-bold tracking-widest text-amber-600">TYPE B</div>
+                                <div class="font-bold text-2xl mt-1">專業人士會員</div>
+                                <div class="text-xs text-slate-500">Professional Membership</div>
+                            </div>
+                            <div class="flex-1 mt-6 text-sm space-y-2 text-slate-600">
+                                <div>• 持香港法定專業資格</div>
+                                <div>• 律師、會計師、醫生、工程師等</div>
+                                <div>• 無獨立法人機構者適用</div>
+                                <div>• 大型企業內部員工除外</div>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-5 pt-4 border-t">需提交專業執照或資格證明</div>
+                        </div>
+                        
+                        <!-- Agency -->
+                        <div class="professional-card bg-white text-slate-900 p-7 rounded-3xl flex flex-col">
+                            <div>
+                                <div class="text-xs font-bold tracking-widest text-amber-600">TYPE C</div>
+                                <div class="font-bold text-2xl mt-1">業務顧問及代理</div>
+                                <div class="text-xs text-slate-500">Business Advisors &amp; Agency Partners</div>
+                            </div>
+                            <div class="flex-1 mt-6 text-sm space-y-2 text-slate-600">
+                                <div>• 單一品牌獨佔席位</div>
+                                <div>• 保險、直銷、房產代理等</div>
+                                <div>• 禁止以產品線拆分席位</div>
+                                <div>• 香港合法經營品牌</div>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-5 pt-4 border-t">需提交員工證或名片</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 8: Closing -->
+        <section id="slide-8" class="slide navy-bg flex items-center justify-center relative">
+            <div class="content-container px-8 text-center">
+                <div class="max-w-md mx-auto">
+                    <div class="mb-6">
+                        <div class="inline-flex items-center rounded-2xl bg-white/5 px-5 py-px text-xs tracking-[3.5px] border border-white/10">HONG KONG</div>
+                    </div>
+                    
+                    <h2 class="text-white text-6xl tracking-[-2.5px] font-bold">Join CBX</h2>
+                    <p class="text-amber-400 mt-4 text-xl">中商匯 — 合作無界，共創未來</p>
+                    
+                    <div class="my-9 h-px w-16 bg-white/20 mx-auto"></div>
+                    
+                    <div class="text-sm text-slate-400 max-w-[280px] mx-auto">
+                        透過精準資源匹配，<br>
+                        實現業務增長與項目共創。
+                    </div>
+                    
+                    <div class="mt-10">
+                        <button onclick="copyContact()" 
+                                class="inline-flex items-center justify-center gap-x-3 px-8 py-3.5 bg-white text-slate-950 font-semibold rounded-2xl hover:bg-amber-50 active:scale-[0.985] transition-all text-sm">
+                            <span>了解入會詳情</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-9 text-[10px] text-slate-500 font-mono tracking-widest">CBX — CENTRAL BUSINESS EXCHANGE</div>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+    
+    <!-- Slide Navigation -->
+    <div class="presentation-nav hidden md:flex items-center gap-x-2 px-4 py-2 rounded-3xl shadow-xl">
+        <button onclick="prevSlide()" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="flex items-center gap-x-1.5 px-2" id="slide-dots">
+            <!-- JS populated dots -->
+        </div>
+        
+        <button onclick="nextSlide()" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent-gold', '#F59E0B');
+        }
+        
+        // Slide navigation
+        let currentSlide = 1;
+        const totalSlides = 8;
+        
+        function updateSlideDots() {
+            const container = document.getElementById('slide-dots');
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = `slide-indicator cursor-pointer ${i === currentSlide ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(i);
+                container.appendChild(dot);
+            }
+        }
+        
+        function updateActiveSlide() {
+            // Update dots
+            document.querySelectorAll('#slide-dots .slide-indicator').forEach((dot, idx) => {
+                dot.classList.toggle('active', (idx + 1) === currentSlide);
+            });
+            
+            // Scroll to slide
+            const slideEl = document.getElementById(`slide-${currentSlide}`);
+            if (slideEl) {
+                slideEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            updateActiveSlide();
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateActiveSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateActiveSlide();
+            }
+        }
+        
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+        
+        function copyContact() {
+            navigator.clipboard.writeText('中商匯 CBX — 香港高端商業資源對接平台').then(() => {
+                const btns = document.querySelectorAll('button');
+                btns.forEach(b => {
+                    if (b.innerText.includes('入會')) {
+                        const original = b.innerHTML;
+                        b.innerHTML = `<span>已複製至剪貼簿</span>`;
+                        setTimeout(() => {
+                            b.innerHTML = original;
+                        }, 1800);
+                    }
+                });
+            }).catch(() => {
+                alert('中商匯 CBX\n香港高端商業資源對接平台');
+            });
+        }
+        
+        // Keyboard navigation
+        function setupKeyboardNav() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSlide();
+                } else if (e.key.toLowerCase() === 'f') {
+                    enterFullscreen();
+                } else if (e.key === 'Escape') {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+            
+            // Touch swipe support (simple)
+            let touchStartX = 0;
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > 60) {
+                    if (diff > 0) nextSlide();
+                    else prevSlide();
+                }
+            });
+        }
+        
+        // Intersection observer for updating current slide on scroll
+        function setupScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const slideId = entry.target.id;
+                        const slideNum = parseInt(slideId.split('-')[1]);
+                        if (slideNum !== currentSlide) {
+                            currentSlide = slideNum;
+                            updateSlideDots();
+                        }
+                    }
+                });
+            }, { threshold: 0.6 });
+            
+            document.querySelectorAll('.slide').forEach(slide => {
+                observer.observe(slide);
+            });
+        }
+        
+        // Initialize everything
+        function initPresentation() {
+            initializeTailwind();
+            updateSlideDots();
+            setupKeyboardNav();
+            setupScrollObserver();
+            
+            // Make sure first slide is active
+            setTimeout(() => {
+                document.getElementById('slide-1').scrollIntoView({ block: 'start' });
+            }, 30);
+            
+            // Easter egg: click logo to go home
+            const logo = document.querySelector('.fa-expand');
+            if (logo) {
+                logo.parentElement.onclick = () => goToSlide(1);
+            }
+            
+            // Accessibility hint
+            console.log('%c[CBX] Presentation ready — Arrow keys / swipe to navigate', 'color:#64748b');
+        }
+        
+        window.onload = initPresentation;
+        
+        // Bonus: Allow direct slide jump via URL hash
+        window.onhashchange = () => {
+            const hash = window.location.hash;
+            if (hash.startsWith('#slide-')) {
+                const num = parseInt(hash.replace('#slide-', ''));
+                if (num >= 1 && num <= totalSlides) goToSlide(num);
+            }
+        };
+    </script>
+</body>
+</html>
