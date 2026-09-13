@@ -421,11 +421,14 @@ const slides = [
 export default function CBXPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = slides.length;
+  const [dragStartX, setDragStartX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const goToSlide = (index: number) => setCurrentSlide(Math.max(0, Math.min(index, totalSlides - 1)));
   const nextSlide = () => goToSlide(currentSlide + 1);
   const prevSlide = () => goToSlide(currentSlide - 1);
 
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
@@ -437,10 +440,34 @@ export default function CBXPresentation() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSlide]);
 
+  // Horizontal Drag / Swipe
+  const handleDragStart = (clientX: number) => {
+    setDragStartX(clientX);
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = (clientX: number) => {
+    if (!isDragging) return;
+    const diff = clientX - dragStartX;
+    
+    if (Math.abs(diff) > 80) { // threshold
+      if (diff > 0) prevSlide();
+      else nextSlide();
+    }
+    setIsDragging(false);
+  };
+
   const slide = slides[currentSlide];
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#0F172A', color: '#fff', overflow: 'hidden', width: '100vw', height: '100vh' }}>
+    <div 
+      style={{ position: 'fixed', inset: 0, background: '#0F172A', color: '#fff', overflow: 'hidden', width: '100vw', height: '100vh', touchAction: 'pan-y' }}
+      onMouseDown={(e) => handleDragStart(e.clientX)}
+      onMouseUp={(e) => handleDragEnd(e.clientX)}
+      onMouseLeave={(e) => handleDragEnd(e.clientX)}
+      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+      onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX)}
+    >
       {/* Slide Content - Full Viewport */}
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
         {/* Fixed Title on content slides */}
