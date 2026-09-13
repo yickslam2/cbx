@@ -459,9 +459,18 @@ export default function CBXPresentation() {
 
   const slide = slides[currentSlide];
 
+  // Click anywhere (except nav/buttons) to go next
+  const handleSlideClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    // Ignore clicks on navigation buttons or links
+    if (target.closest('button') || target.closest('a')) return;
+    nextSlide();
+  };
+
   return (
     <div 
-      style={{ position: 'fixed', inset: 0, background: '#0F172A', color: '#fff', overflow: 'hidden', width: '100vw', height: '100vh', touchAction: 'pan-y' }}
+      style={{ position: 'fixed', inset: 0, background: '#0F172A', color: '#fff', overflow: 'hidden', width: '100vw', height: '100vh', touchAction: 'pan-y', cursor: 'pointer' }}
+      onClick={handleSlideClick}
       onMouseDown={(e) => handleDragStart(e.clientX)}
       onMouseUp={(e) => handleDragEnd(e.clientX)}
       onMouseLeave={(e) => handleDragEnd(e.clientX)}
